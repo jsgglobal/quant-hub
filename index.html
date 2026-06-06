@@ -5,90 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quant Analytics System</title>
     <style>
-        /* 밝고 깔끔한 신뢰감 위주의 컬러 팔레트 */
+        /* 프리미엄 핀테크 스타일 컬러 팔레트 */
         :root {
-            --bg-main: #f8fafc;       /* 밝은 회색/푸른빛 배경 */
-            --card-bg: #ffffff;       /* 순백색 카드 */
-            --text-dark: #0f172a;     /* 짙은 남색 텍스트 (블랙 대체) */
-            --text-light: #64748b;    /* 부드러운 설명 텍스트 */
-            --primary: #2563eb;       /* 신뢰의 상징인 메인 블루 */
-            --primary-hover: #1d4ed8; /* 마우스 오버 시 조금 더 짙은 블루 */
-            --border: #e2e8f0;        /* 연한 테두리 */
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --border: #e2e8f0;
+            --card-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+            --card-shadow-hover: 0 20px 40px rgba(37, 99, 235, 0.08);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
             background-color: var(--bg-main);
             color: var(--text-dark);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 심플한 헤더 */
+        /* 전문가 그래픽: 매쉬 그라데이션 헤더 (사진 없이 코드로 구현한 고급 그래픽) */
         .header {
             text-align: center;
-            padding: 70px 20px 50px;
-            background-color: var(--card-bg);
+            padding: 90px 20px 70px;
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(217,100%,94%,1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(210,100%,96%,1) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, hsla(220,100%,97%,1) 0px, transparent 50%);
             border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
         }
 
         .header h1 {
-            font-size: 2.2rem;
+            font-size: 2.6rem;
             margin: 0 0 15px 0;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             color: var(--text-dark);
+            position: relative;
+            z-index: 1;
         }
 
         .header p {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: var(--text-light);
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             word-break: keep-all;
+            position: relative;
+            z-index: 1;
         }
 
         /* 앱 리스트 컨테이너 */
         .container {
             max-width: 1200px;
-            margin: 60px auto;
+            margin: -30px auto 80px; /* 헤더와 자연스럽게 겹치도록 위로 끌어올림 */
             padding: 0 20px;
+            position: relative;
+            z-index: 2;
         }
 
-        /* 확장성을 고려한 자동 정렬 그리드 
-           (화면 크기에 따라 3개, 4개씩 자동으로 들어차게 설계됨) 
-        */
+        /* 3열 완벽 비율 그리드 (앱 6개에 최적화) */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
         }
 
-        /* 미니멀한 카드 디자인 */
+        /* 미니멀 프리미엄 카드 디자인 */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 카드 상단 포인트 라인 */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--border);
+            transition: background 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px -8px rgba(37, 99, 235, 0.15);
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
             border-color: #bfdbfe;
         }
 
-        /* 카드 상단: 번호와 이모티콘 */
+        .card:hover::before {
+            background: var(--primary);
+        }
+
+        /* 카드 상단: 번호와 이모티콘 뱃지 */
         .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .card-number {
@@ -96,20 +125,29 @@
             font-weight: 800;
             color: var(--primary);
             background-color: #eff6ff;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             letter-spacing: 0.5px;
         }
 
+        /* 이모티콘에 부드러운 배경을 주어 아이콘처럼 보이게 함 */
         .card-emoji {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #f1f5f9;
         }
 
         /* 카드 내용 */
         .card-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            margin: 0 0 10px 0;
+            margin: 0 0 12px 0;
             color: var(--text-dark);
             letter-spacing: -0.5px;
         }
@@ -117,7 +155,7 @@
         .card-desc {
             font-size: 0.95rem;
             color: var(--text-light);
-            margin: 0 0 24px 0;
+            margin: 0 0 30px 0;
             flex-grow: 1;
             line-height: 1.6;
             word-break: keep-all;
@@ -127,18 +165,21 @@
         .card-btn {
             display: block;
             text-align: center;
-            background-color: var(--primary);
-            color: #ffffff;
+            background-color: #f1f5f9;
+            color: var(--primary);
             text-decoration: none;
-            padding: 12px 0;
-            border-radius: 10px;
-            font-weight: 600;
+            padding: 14px 0;
+            border-radius: 12px;
+            font-weight: 700;
             font-size: 0.95rem;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            border: 1px solid transparent;
         }
 
-        .card-btn:hover {
-            background-color: var(--primary-hover);
+        .card:hover .card-btn {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         footer {
@@ -147,13 +188,21 @@
             color: #94a3b8;
             font-size: 0.9rem;
         }
+
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            .header { padding: 60px 20px 60px; }
+            .header h1 { font-size: 2.2rem; }
+            .container { margin-top: -20px; }
+            .grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
     <header class="header">
         <h1>Quant Analytics System</h1>
-        <p>시장 데이터 분석부터 정밀 타점 산출, 그리고 자동매매까지. 효율적이고 투명한 투자를 위한 통합 분석 머신입니다.</p>
+        <p>시장 데이터 분석부터 정밀 타점 산출, 자동매매, 그리고 리스크 관리까지. 효율적이고 투명한 투자를 위한 통합 분석 머신입니다.</p>
     </header>
 
     <div class="container">
@@ -209,11 +258,21 @@
                 <a href="https://kiwoomsbspy-metqtkeblhuffdzkfo3qen.streamlit.app" target="_blank" class="card-btn">시스템 실행</a>
             </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-number">APP 06</span>
+                    <span class="card-emoji">🛡️</span>
+                </div>
+                <h2 class="card-title">단기 리스크 트레이더</h2>
+                <p class="card-desc">데이트레이딩 및 단기 매매에 특화된 리스크 관리 도구입니다. 변동성에 대비한 최적의 포지션 사이징을 계산합니다.</p>
+                <a href="https://intradayrisktrader-x9wcgvj8z7jfrappb6z5t8c.streamlit.app/" target="_blank" class="card-btn">시스템 실행</a>
+            </div>
+
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Quant Analytics System.</p>
+        <p>&copy; 2026 Quant Analytics System. Data-Driven Investment Machine.</p>
     </footer>
 
 </body>
